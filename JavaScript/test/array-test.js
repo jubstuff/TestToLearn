@@ -64,6 +64,9 @@ TestCase('ArrayPopTest', {
 
         assertEquals('c', c);
         assertString(c);
+    },
+    "test array pop should return undefined on empty array":function () {
+        assertUndefined([].pop());
     }
 });
 
@@ -115,9 +118,24 @@ TestCase('ArrayReverseTest', {
     }
 });
 
-TestCase('EqualityTest', {
-    "test === equality operator":function () {
-        assertFalse('' === 0);
-        assertFalse(0 === '');
+TestCase('ArrayShiftTest', {
+    setUp:function () {
+        this.a = [1, 2, 3];
+    },
+    tearDown:function () {
+        delete this.a;
+    },
+    "test array shift should remove the first element":function () {
+        this.a.shift();
+        assertEquals([2, 3], this.a);
+    },
+    "test array shift should return the removed element":function () {
+        var c = this.a.shift();
+
+        assertEquals(1, c);
+    },
+    "test array shift should return undefined on empty array":function () {
+        assertUndefined([].shift());
     }
+
 });
