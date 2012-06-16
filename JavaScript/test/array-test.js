@@ -139,3 +139,50 @@ TestCase('ArrayShiftTest', {
     }
 
 });
+
+TestCase('ArraySliceTest', {
+    //array.slice(start, end)
+    setUp:function () {
+        this.a = [1, 2, 3, 4, 5];
+    },
+    tearDown:function () {
+        delete this.a;
+    },
+    "test array slice should not modify original array":function () {
+        this.a.slice(2);
+
+        assertEquals([1, 2, 3, 4, 5], this.a);
+    },
+    "test array slice with no end parameter should return from start to array.length":function () {
+        var b = this.a.slice(3);
+
+        assertEquals([4, 5], b);
+    },
+    "test array slice with start >= array.length should return empty array":function () {
+        var b = this.a.slice(100);
+        var c = this.a.slice(this.a.length);
+
+        assertArray(b);
+        assertEquals([], b);
+
+        assertArray(c);
+        assertEquals([], c);
+    },
+    "test array slice with negative start should add array.length to start and slice from that value":function () {
+        var b = this.a.slice(-5);
+        assertEquals([1,2,3,4,5], b);
+        b = this.a.slice(-3);
+        assertEquals([3,4,5], b);
+    },
+    "test array slice with start and end should return from array[start] to array[end-1]":function () {
+        assertEquals([3,4], this.a.slice(2,4));
+    },
+    "test array slice with start >= end should return empty array":function () {
+        assertEquals([], this.a.slice(3,1));
+        assertEquals([], this.a.slice(3,3));
+    },
+    "test array with negative start and end should add array.length to both":function () {
+        assertEquals([1], this.a.slice(-5, -4));
+
+    }
+});
